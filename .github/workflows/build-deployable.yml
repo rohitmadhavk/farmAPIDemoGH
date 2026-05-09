@@ -1,0 +1,25 @@
+name: build-deployable
+run-name: ${{ github.actor }} is building - creating a deployable artifact for this app
+on: [push]
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.313'
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test with the dotnet CLI
+      run: dotnet test --no-build
+    - name: Publish
+      run: dotnet publish FarmAPI/FarmAPI.csproj --configuration Release --no-build --output ./publish
+    - uses: actions/upload-artifact@v4
+      with:
+        name: package-app-${{github.run_number}}
+        path: ./publish
