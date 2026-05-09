@@ -23,3 +23,15 @@ jobs:
       with:
         name: package-app-${{github.run_number}}
         path: ./publish
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy Artifact to Azure App Service
+        uses: actions/download-artifact@v5
+        with:
+          name: 
+            package-app-${{github.run_number}}
+      - name: Print
+        run: echo "Hello World"
