@@ -34,4 +34,4 @@ jobs:
           name: 
             package-app-${{github.run_number}}
       - name: Print
-        run: echo "${{ env.PRINT_STRING_ENV_MSG }}"
+        run: echo "${{ vars.PRINT_STRING_ENV_MSG }}"
