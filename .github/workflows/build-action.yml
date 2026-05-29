@@ -1,5 +1,5 @@
 name: build-action
-run-name: ${{ github.actor }} is building this app
+run-name: ${{ startsWith(github.ref, 'refs/tags/') && format('[{0}] [{1}] Building App', github.ref_name, github.event.head_commit.message || 'no commit message') || 'Building App' }}
 on: [push]
 jobs:
   build:
